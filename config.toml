@@ -8,12 +8,12 @@ build-mindetach-module = true
 
 
 [YouTube]
-enabled = true                                                        # add 'enabled = false' key to entries to not build them
-build-mode = "both"                                                   # 'both', 'apk' or 'module'
-excluded-patches = "debugging"                                        # whitespace seperated list of patches to exclude (multiline strings are not supported)
-included-patches = ""                                                 # whitespace seperated list of patches to include
-version = "auto"                                                      # 'auto', 'latest' or a custom one like '17.40.41'
-exclusive-patches = false                                             # excludes all patches by default
+enabled = true                                                                                                   # add 'enabled = false' key to entries to not build them
+build-mode = "both"                                                                                              # 'both', 'apk' or 'module'
+excluded-patches = "debugging always-autorepeat hide-autoplay-button custom-video-speed copy-video-url "         # whitespace seperated list of patches to exclude (multiline strings are not supported)
+included-patches = ""                                                                                            # whitespace seperated list of patches to include
+version = "auto"                                                                                                 # 'auto', 'latest' or a custom one like '17.40.41'
+exclusive-patches = false                                                                                        # excludes all patches by default
 microg-patch = "microg-support"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube/"
 module-prop-name = "ytrv-magisk"
