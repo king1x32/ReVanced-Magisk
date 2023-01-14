@@ -11,7 +11,7 @@ if [ "${GITHUB_TOKEN+x}" ]; then
 else
 	GH_AUTH_HEADER=""
 fi
-GITHUB_REPOSITORY=${GITHUB_REPOSITORY:-"j-hc/revanced-magisk-module"}
+GITHUB_REPOSITORY=${GITHUB_REPOSITORY:-"kingsmanvn-official/revanced-magisk"}
 NEXT_VER_CODE=${NEXT_VER_CODE:-$(date +'%Y%m%d')}
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0"
 DRYRUN=false

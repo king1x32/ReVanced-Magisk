@@ -17,6 +17,12 @@ jobs:
           fetch-depth: 0
           submodules: true
 
+      - uses: dev-drprasad/delete-older-releases@v0.2.1
+        with:
+          keep_latest: 77
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Get next version code
         id: next_ver_code
         run: |
@@ -106,7 +112,7 @@ jobs:
         run: |
           cd build || echo "build folder not found"
 
-          TG_CHAT="@rvc_magisk"
+          TG_CHAT="@revanced_kingsmanvn"
           NL=$'\n'
           APKS=""
           MODULES=""
