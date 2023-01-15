@@ -73,8 +73,8 @@ jobs:
           get_update_json() {
             echo "{
             \"version\": \"$1\",
-            \"versionCode\": $2,
-            \"zipUrl\": \"$3\",
+            \"versionCode\": ${{ steps.next_ver_code.outputs.NEXT_VER_CODE}},
+            \"zipUrl\": \"$2\",
             \"changelog\": \"https://raw.githubusercontent.com/$GITHUB_REPOSITORY/update/build.md\"
           }"
           }
@@ -90,11 +90,11 @@ jobs:
             VER=$(echo "$ZIP_S" | grep version=)
             VER="${VER##*=}"
             DLURL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/${{ steps.next_ver_code.outputs.NEXT_VER_CODE }}/${OUTPUT}"
-            get_update_json "$VER" "${{ steps.next_ver_code.outputs.NEXT_VER_CODE}}" "$DLURL" "$CHANGELOG_URL" >"../$UPDATE_JSON"
+            get_update_json "$VER" "$DLURL" >"../$UPDATE_JSON"
           done
           cd ..
 
-          find . -name "*-update.json" | grep . || : >dummy.json
+          find . -name "*-update.json" | grep . || : >dummy-update.json
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
@@ -125,7 +125,7 @@ jobs:
           MODULES=${MODULES#"$NL"}
           APKS=${APKS#"$NL"}
 
-          BODY="$(sed 's/^\* \*\*/↪ \*\*/g; s/^\* `/↪ \*\*/g; s/`/\*/g;  s/\*\*/\*/g; s/###//g;'  build.md)"
+          BODY="$(sed 's/^\* \*\*/↪ \*\*/g; s/^\* `/↪ \*\*/g; s/`/\*/g; s/^\* /\↪/g; s/\*\*/\*/g; s/###//g;' ../build.md)"
           MSG="*ReVanced Magisk*
           
           *New build!*
@@ -139,7 +139,11 @@ jobs:
           APKs:
           ${APKS}
           "
-          
           echo "'$MSG'"
           POST="https://api.telegram.org/bot${TG_TOKEN}/sendMessage"
           curl -X POST --data-urlencode "parse_mode=Markdown" --data-urlencode "text=${MSG}" --data-urlencode "chat_id=${TG_CHAT}" "$POST"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: logs
+          path: logs
