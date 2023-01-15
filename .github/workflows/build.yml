@@ -26,9 +26,7 @@ jobs:
       - name: Get next version code
         id: next_ver_code
         run: |
-          TAG=$(git tag --sort=creatordate | tail -1)
-          if [ -z "$TAG" ]; then TAG=0; fi
-          echo "NEXT_VER_CODE=$((TAG + 1))" >> $GITHUB_OUTPUT
+          echo "NEXT_VER_CODE=$(TZ='Asia/Ho_Chi_Minh' date +"%Y.%m.%d-%H.%M.%S")" >> $GITHUB_OUTPUT 
 
       - name: Build modules/APKs
         run: ./build.sh
@@ -128,7 +126,9 @@ jobs:
           APKS=${APKS#"$NL"}
 
           BODY="$(sed 's/^\* \*\*/↪ \*\*/g; s/^\* `/↪ \*\*/g; s/`/\*/g;  s/\*\*/\*/g; s/###//g;'  build.md)"
-          MSG="*New build!*
+          MSG="*ReVanced Magisk*
+          
+          *New build!*
 
           ${BODY}
 
@@ -139,6 +139,7 @@ jobs:
           APKs:
           ${APKS}
           "
+          
           echo "'$MSG'"
           POST="https://api.telegram.org/bot${TG_TOKEN}/sendMessage"
           curl -X POST --data-urlencode "parse_mode=Markdown" --data-urlencode "text=${MSG}" --data-urlencode "chat_id=${TG_CHAT}" "$POST"
