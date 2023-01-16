@@ -46,9 +46,8 @@ jobs:
           }
           is_integrations_latest() {
             mkdir -p temp
-            last_integrations_url=$(wget -nv --header="Authorization: token ${{ secrets.GITHUB_TOKEN }}" -O- https://api.github.com/repos/revanced/revanced-integrations/releases/latest - | json_get 'browser_download_url')
-            last_integrations_apk=${last_integrations_url##*/}
-            last_integrations="${last_integrations_apk%.apk}-$(cut -d/ -f8 <<<"$last_integrations_url").apk"
+            declare -r last_integrations_url=$(wget -nv --header="Authorization: token ${{ secrets.GITHUB_TOKEN }}" -O- https://api.github.com/repos/revanced/revanced-integrations/releases/latest - | json_get 'browser_download_url')
+            declare -r last_integrations=${last_integrations_url##*/}
             cur_integrations=$(sed -n 's/.*Integrations: \(.*\)/\1/p' build.md | xargs)
 
             echo "current integrations version: $cur_integrations"
