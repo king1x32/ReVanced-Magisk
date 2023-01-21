@@ -22,7 +22,8 @@ Get the [latest CI release](https://github.com/Kingsmanvn-Official/ReVanced-Magi
      * handle installation of the correct version of the stock app and all that
      * mount the patched app immediately without needing to reboot
 
-#### **Note that the [CI workflow](../../actions/workflows/ci.yml) is scheduled to build the modules and APKs everyday using GitHub Actions if there is a change in ReVanced patches. You may want to disable it.**
+#### **Note that the [CI workflow](../../actions/workflows/ci.yml) is scheduled to build the modules and APKs every 6 hours using GitHub Actions if there is a change. You may want to disable it.**
+#### **Fix next video not autoplay (error from upstream)**
 
 ## To include/exclude patches
 [**See the list of patches**](https://github.com/revanced/revanced-patches#-list-of-available-patches)
