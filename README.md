@@ -10,8 +10,8 @@ Get the [latest CI release](https://github.com/Kingsmanvn-Official/ReVanced-Magi
 [**mindetach module**](https://github.com/j-hc/mindetach-magisk) in the releases section detaches YouTube and YouTube Music from Play Store and blocks it from updating them.
 
 ## Features
+ * Support all present and future ReVanced and [ReVanced Extended](https://github.com//inotia00/revanced-patches) apps
  * Can build Magisk modules and non-root APKs
- * Support all present and future Revanced apps
  * Updated daily with the latest versions of apps and patches in accordance with your configuration
  * Cleans APKs from unneeded libs to make them smaller
  * Fully open-source, every binary or APK is compiled without human intervention
@@ -25,7 +25,7 @@ Get the [latest CI release](https://github.com/Kingsmanvn-Official/ReVanced-Magi
 #### **Note that the [CI workflow](../../actions/workflows/ci.yml) is scheduled to build the modules and APKs every 6 hours using GitHub Actions if there is a change. You may want to disable it.**
 #### **Fix next video not autoplay (error from upstream)**
 
-## To include/exclude patches
+## To include/exclude patches or patch more ReVanced Apps
 [**See the list of patches**](https://github.com/revanced/revanced-patches#-list-of-available-patches)
 
  * Star the repo :eyes:
