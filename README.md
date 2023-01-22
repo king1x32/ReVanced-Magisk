@@ -4,6 +4,7 @@
 [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/revanced_kingsmanvn)
 [![Build Modules](https://github.com/j-hc/revanced-magisk-module/actions/workflows/build.yml/badge.svg)](https://github.com/Kingsmanvn-Official/ReVanced-Magisk/actions/workflows/build.yml)
 [![CI](https://github.com/Kingsmanvn-Official/ReVanced-Magisk/actions/workflows/ci.yml/badge.svg?event=schedule)](https://github.com/Kingsmanvn-Official/ReVanced-Magisk/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/Kingsmanvn-Official/ReVanced-Magisk?style=flat-square)](https://github.com/Kingsmanvn-Official/ReVanced-Magisk/releases/latest)
 
 Get the [latest CI release](https://github.com/Kingsmanvn-Official/ReVanced-Magisk/releases).
 
