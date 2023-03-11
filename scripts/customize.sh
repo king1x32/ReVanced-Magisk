@@ -14,22 +14,6 @@ else
 fi
 set_perm_recursive $MODPATH/bin 0 0 0755 0777
 
-grep __PKGNAME /proc/mounts | while read -r line; do
-	ui_print "* Un-mount"
-	mp=${line#* }
-	mp=${mp%% *}
-	umount -l ${mp%%\\*}
-done
-am force-stop __PKGNAME
-
-BASEPATH=$(pm path __PKGNAME | grep base)
-BASEPATH=${BASEPATH#*:}
-INS=true
-if [ "$BASEPATH" ]; then
-	if [ ! -d ${BASEPATH%base.apk}lib ]; then
-		ui_print "* Invalid installation found. Uninstalling..."
-		pm uninstall -k --user 0 __PKGNAME
-	elif cmpr $BASEPATH $MODPATH/__PKGNAME.apk; then
 nsenter -t1 -m grep __PKGNAME /proc/mounts | while read -r line; do
 	ui_print "* Un-mount"
 	mp=${line#* }
@@ -54,18 +38,6 @@ if BASEPATH=$(pm path __PKGNAME); then
 fi
 if [ $INS = true ]; then
 	ui_print "* Updating __PKGNAME (v__PKGVER)"
-	set_perm $MODPATH/__PKGNAME.apk 1000 1000 644 u:object_r:apk_data_file:s0
-	if ! op=$(pm install --user 0 -i com.android.vending -r -d $MODPATH/__PKGNAME.apk 2>&1); then
-		ui_print "ERROR: APK installation failed!"
-		abort "$op"
-	fi
-	BASEPATH=$(pm path __PKGNAME | grep base)
-	BASEPATH=${BASEPATH#*:}
-	if [ -z "$BASEPATH" ]; then
-		abort "ERROR: install __PKGNAME manually and reflash the module"
-	fi
-fi
-BASEPATHLIB=${BASEPATH%base.apk}lib/${ARCH}
 	SZ=$(stat -c "%s" $MODPATH/__PKGNAME.apk)
 	if ! SES=$(pm install-create --user 0 -i com.android.vending -r -d -S "$SZ" 2>&1); then
 		ui_print "ERROR: session creation failed"
@@ -107,10 +79,6 @@ mkdir $NVBASE/rvhc 2>/dev/null
 RVPATH=$NVBASE/rvhc/__PKGNAME_rv.apk
 mv -f $MODPATH/base.apk $RVPATH
 
-if ! op=$(su -Mc mount -o bind $RVPATH $BASEPATH 2>&1); then
-	ui_print "ERROR: Mount failed!"
-	ui_print "$op"
-	abort "Flash the module in official Magisk Manager app"
 if ! op=$(nsenter -t1 -m mount -o bind $RVPATH $BASEPATH/base.apk 2>&1); then
 	ui_print "ERROR: Mount failed!"
 	ui_print "$op"
@@ -119,10 +87,9 @@ am force-stop __PKGNAME
 ui_print "* Optimizing __PKGNAME"
 nohup cmd package compile --reset __PKGNAME >/dev/null 2>&1 &
 
-rm -rf $MODPATH/bin $MODPATH/__PKGNAME.apk $NVBASE/__PKGNAME_rv.apk
 ui_print "* Cleanup"
 rm -rf $MODPATH/bin $MODPATH/__PKGNAME.apk
 
 ui_print "* Done"
-ui_print "  by j-hc (github.com/j-hc)"
+ui_print "  by kingsmanvn (github.com/Kingsmanvn-Official)"
 ui_print " "

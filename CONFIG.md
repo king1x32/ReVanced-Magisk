@@ -19,12 +19,6 @@ apkmonk-dlurl = "https://www.apkmonk.com/app/com.app.app/"
 ## If you'd like to get to know more about other options:
 
 There exists an example below with all defaults shown and all the keys explicitly set.  
-All keys are optional (except download urls) and are assigned to their default values if not set explicitly.  
-
-```toml
-[Some-App]
-app-name = "SomeApp" # if set, app name becomes SomeApp instead of Some-App. default is same as table name, which is 'Some-App' here.
-# this affects the release name and stuff like that
 **All keys are optional** (except download urls) and are assigned to their default values if not set explicitly.  
 
 ```toml
@@ -46,7 +40,6 @@ version = "auto" # 'auto', 'latest' or a custom one e.g. '17.40.41'. 'auto' opti
 exclusive-patches = false # exclude all patches by default. default: false
 apkmirror-dlurl = "https://www.apkmirror.com/apk/inc/app" # download url. if not set, uptodown dl url is used.
 uptodown-dlurl = "https://spotify.en.uptodown.com/android" # uptodown url. if not set, apkmirror dl url is used. apkmirror is prioritized
-module-prop-name = "ytrv-magisk" # magisk module prop name. not required.
 module-prop-name = "some-app-magisk" # magisk module prop name. not required.
 merge-integrations = false # merge integrations. used if cant be auto detected. default: false
 dpi = "360-480dpi" # used to select apk variant from apkmirror. default: nodpi
@@ -56,5 +49,4 @@ arch = "arm64-v8a" # 'arm64-v8a', 'arm-v7a' or 'all'. default: all
 ```
 
 # Building ReVanced Extended
-Use [`config-rv-ex.toml`](./config-rv-ex.toml) as the config by replacing config.toml with it
 Use [`config-rv-ex.toml`](./config-rv-ex.toml) as the config. Or you can run build.sh as: `./build.sh config-rv-ex.toml`

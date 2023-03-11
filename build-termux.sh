@@ -19,17 +19,6 @@ ask() {
 	return 1
 }
 
-pr "Setting up environment..."
-yes "" | pkg update -y && pkg install -y git wget openssl jq openjdk-17 zip
-
-pr "Cloning revanced-magisk-module repository..."
-if [ -d revanced-magisk-module ]; then
-	if ask "Directory revanced-magisk-module already exists. Do you want to clone the repo again? [y/n]"; then
-		rm -rf revanced-magisk-module
-		git clone https://github.com/j-hc/revanced-magisk-module --recurse --depth 1
-		sed -i '/^enabled.*/d; /^\[.*\]/a enabled = false' revanced-magisk-module/config.toml
-	fi
-else
 if [ ! -f ~/.rvmm_"$(date '+%Y%m')" ]; then
 	pr "Setting up environment..."
 	yes "" | pkg update -y && pkg install -y openssl git wget jq openjdk-17 zip
@@ -37,28 +26,23 @@ if [ ! -f ~/.rvmm_"$(date '+%Y%m')" ]; then
 fi
 
 if [ -f build.sh ]; then cd ..; fi
-if [ -d revanced-magisk-module ]; then
-	pr "Checking for revanced-magisk-module updates"
-	git -C revanced-magisk-module fetch
-	if git -C revanced-magisk-module status | grep -q 'is behind'; then
-		pr "revanced-magisk-module already is not synced with upstream."
-		pr "Cloning revanced-magisk-module. config.toml will be preserved."
-		cp -f revanced-magisk-module/config.toml .
-		rm -rf revanced-magisk-module
-		git clone https://github.com/j-hc/revanced-magisk-module --recurse --depth 1
-		mv -f config.toml revanced-magisk-module/config.toml
+if [ -d ReVanced-Magisk ]; then
+	pr "Checking for ReVanced-Magisk updates"
+	git -C ReVanced-Magisk fetch
+	if git -C ReVanced-Magisk status | grep -q 'is behind'; then
+		pr "RaVanced-Magisk already is not synced with upstream."
+		pr "Cloning ReVanced-Magisk. config.toml will be preserved."
+		cp -f ReVanced-Magisk/config.toml .
+		rm -rf ReVanced-Magisk
+		git clone https://github.com/Kingsmanvn-Official/ReVanced-Magisk --recurse --depth 1
+		mv -f config.toml ReVanced-Magisk/config.toml
 	fi
 else
-	pr "Cloning revanced-magisk-module."
-	git clone https://github.com/j-hc/revanced-magisk-module --recurse --depth 1
-	sed -i '/^enabled.*/d; /^\[.*\]/a enabled = false' revanced-magisk-module/config.toml
+	pr "Cloning ReVanced-Magisk."
+	git clone https://github.com/Kingsmanvn-Official/ReVanced-Magisk --recurse --depth 1
+	sed -i '/^enabled.*/d; /^\[.*\]/a enabled = false' ReVanced-Magisk/config.toml
 fi
-cd revanced-magisk-module
-
-if ask "Do you want to open the config.toml for customizations? [y/n]"; then
-	nano config.toml
-else
-	pr "No app is selected for patching!"
+cd ReVanced-Magisk
 chmod +x build.sh build-termux.sh
 
 if ask "Do you want to open the config.toml for customizations? [y/n]"; then
@@ -71,8 +55,6 @@ fi
 
 cd build
 pr "Ask for storage permission"
-until ls /sdcard >/dev/null 2>&1; do
-	yes | termux-setup-storage >/dev/null 2>&1
 until
 	yes | termux-setup-storage >/dev/null 2>&1
 	ls /sdcard >/dev/null 2>&1
@@ -81,15 +63,13 @@ do
 done
 
 PWD=$(pwd)
-mkdir ~/storage/downloads/revanced-magisk-module 2>/dev/null || :
-mkdir -p ~/storage/downloads/revanced-magisk-module
+mkdir -p ~/storage/downloads/ReVanced-Magisk
 for op in *; do
 	[ "$op" = "*" ] && continue
-	cp -f "${PWD}/${op}" ~/storage/downloads/revanced-magisk-module/"${op}"
+	cp -f "${PWD}/${op}" ~/storage/downloads/ReVanced-Magisk/"${op}"
 done
 
-pr "Outputs are available in /sdcard/Download folder"
-pr "Outputs are available in /sdcard/Download/revanced-magisk-module folder"
-am start -a android.intent.action.VIEW -d file:///sdcard/Download/revanced-magisk-module -t resource/folder
+pr "Outputs are available in /sdcard/Download/ReVanced-Magisk folder"
+am start -a android.intent.action.VIEW -d file:///sdcard/Download/ReVanced-Magisk -t resource/folder
 sleep 2
-am start -a android.intent.action.VIEW -d file:///sdcard/Download/revanced-magisk-module -t resource/folder
+am start -a android.intent.action.VIEW -d file:///sdcard/Download/ReVanced-Magisk -t resource/folder
