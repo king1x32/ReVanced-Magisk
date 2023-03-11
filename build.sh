@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
+trap "rm -rf temp/tmp.*; exit 1" INT
+
+if [ "${1:-}" = "clean" ]; then
+	rm -rf temp build logs
+	exit 0
+fi
 
 source utils.sh
-trap "rm -rf temp/tmp.*" INT
 
 : >build.md
 
@@ -28,6 +33,21 @@ PARALLEL_JOBS=$(toml_get "$main_config_t" parallel-jobs) || abort "ERROR: parall
 BUILD_MINDETACH_MODULE=$(toml_get "$main_config_t" build-mindetach-module) || abort "ERROR: build-mindetach-module is missing"
 LOGGING_F=$(toml_get "$main_config_t" logging-to-file) && vtf "$LOGGING_F" "logging-to-file" || LOGGING_F=false
 
+
+# -- Main config --
+main_config_t=$(toml_get_table "")
+COMPRESSION_LEVEL=$(toml_get "$main_config_t" compression-level) || abort "ERROR: compression-level is missing"
+ENABLE_MAGISK_UPDATE=$(toml_get "$main_config_t" enable-magisk-update) || abort "ERROR: enable-magisk-update is missing"
+if [ "$ENABLE_MAGISK_UPDATE" = true ] && [ -z "${GITHUB_REPOSITORY:-}" ]; then
+	pr "You are building locally. Magisk updates will not be enabled."
+	ENABLE_MAGISK_UPDATE=false
+fi
+PARALLEL_JOBS=$(toml_get "$main_config_t" parallel-jobs) || PARALLEL_JOBS=1
+BUILD_MINDETACH_MODULE=$(toml_get "$main_config_t" build-mindetach-module) || abort "ERROR: build-mindetach-module is missing"
+LOGGING_F=$(toml_get "$main_config_t" logging-to-file) && vtf "$LOGGING_F" "logging-to-file" || LOGGING_F=false
+CONF_PATCHES_VER=$(toml_get "$main_config_t" patches-version) || CONF_PATCHES_VER=
+CONF_INTEGRATIONS_VER=$(toml_get "$main_config_t" integrations-version) || CONF_INTEGRATIONS_VER=
+
 PATCHES_SRC=$(toml_get "$main_config_t" patches-source) || PATCHES_SRC="revanced/revanced-patches"
 INTEGRATIONS_SRC=$(toml_get "$main_config_t" integrations-source) || INTEGRATIONS_SRC="revanced/revanced-integrations"
 RV_BRAND=$(toml_get "$main_config_t" rv-brand) || RV_BRAND="ReVanced"
@@ -42,6 +62,13 @@ if [ "$BUILD_MINDETACH_MODULE" = true ]; then : >$PKGS_LIST; fi
 if [ "$LOGGING_F" = true ]; then mkdir -p logs; fi
 jq --version >/dev/null || abort "\`jq\` is not installed. install it with 'apt install jq' or equivalent"
 get_cmpr
+# -- Main config --
+
+if ((COMPRESSION_LEVEL > 9)) || ((COMPRESSION_LEVEL < 0)); then abort "compression-level must be from 0 to 9"; fi
+if [ "${NOSET:-}" = true ]; then set_prebuilts; else get_prebuilts || set_prebuilts; fi
+if [ "$BUILD_MINDETACH_MODULE" = true ]; then : >$PKGS_LIST; fi
+if [ "$LOGGING_F" = true ]; then mkdir -p logs; fi
+jq --version >/dev/null || abort "\`jq\` is not installed. install it with 'apt install jq' or equivalent"
 
 log "**App Versions:**"
 idx=0
@@ -62,6 +89,7 @@ for table_name in $(toml_get_table_names); do
 	app_args[build_mode]=$(toml_get "$t" build-mode) && {
 		if ! isoneof "${app_args[build_mode]}" both apk module; then
 			abort "ERROR: '${app_args[build_mode]}' is not a valid option for '${table_name}': only 'both', 'apk' or 'module' is allowed"
+			abort "ERROR: build-mode '${app_args[build_mode]}' is not a valid option for '${table_name}': only 'both', 'apk' or 'module' is allowed"
 		fi
 	} || app_args[build_mode]=apk
 	app_args[uptodown_dlurl]=$(toml_get "$t" uptodown-dlurl) && {
@@ -70,6 +98,10 @@ for table_name in $(toml_get_table_names); do
 		app_args[uptodown_dlurl]=${app_args[uptodown_dlurl]%/}
 		app_args[dl_from]=uptodown
 	} || app_args[uptodown_dlurl]=""
+	app_args[apkmonk_dlurl]=$(toml_get "$t" apkmonk-dlurl) && {
+		app_args[apkmonk_dlurl]=${app_args[apkmonk_dlurl]%/}
+		app_args[dl_from]=apkmonk
+	} || app_args[apkmonk_dlurl]=""
 	app_args[apkmirror_dlurl]=$(toml_get "$t" apkmirror-dlurl) && {
 		app_args[apkmirror_dlurl]=${app_args[apkmirror_dlurl]%/}
 		app_args[dl_from]=apkmirror
@@ -82,6 +114,15 @@ for table_name in $(toml_get_table_names); do
 			abort "ERROR: '${app_args[arch]}' is not a valid option for 'arch': only 'all', 'arm64-v8a', 'arm-v7a' is allowed"
 		fi
 	} || app_args[arch]="all"
+		abort "ERROR: no 'apkmirror_dlurl', 'uptodown_dlurl', 'apkmonk_dlurl' were set for '$table_name'."
+	fi
+	app_args[arch]=$(toml_get "$t" arch) && {
+		if ! isoneof "${app_args[arch]}" all arm64-v8a arm-v7a; then
+			abort "ERROR: arch '${app_args[arch]}' is not a valid option for '${table_name}': only 'all', 'arm64-v8a', 'arm-v7a' is allowed"
+		fi
+	} || app_args[arch]="all"
+	app_args[merge_integrations]=$(toml_get "$t" merge-integrations) || app_args[merge_integrations]=false
+	app_args[dpi]=$(toml_get "$t" dpi) || app_args[dpi]="nodpi"
 	app_args[module_prop_name]=$(toml_get "$t" module-prop-name) || {
 		app_name_l=${app_args[app_name],,}
 		if [ "${app_args[arch]}" = "all" ]; then
@@ -94,6 +135,7 @@ for table_name in $(toml_get_table_names); do
 		logf=logs/"${table_name,,}.log"
 		: >"$logf"
 		(build_rv 2>&1 app_args | tee "$logf") &
+		{ build_rv 2>&1 app_args | tee "$logf"; } &
 	else
 		build_rv app_args &
 	fi

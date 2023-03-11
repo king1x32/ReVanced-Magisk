@@ -7,6 +7,9 @@
 [![Latest release](https://img.shields.io/github/v/release/Kingsmanvn-Official/ReVanced-Magisk?style=flat-square)](https://github.com/Kingsmanvn-Official/ReVanced-Magisk/releases/latest)
 
 Get the [latest CI release](https://github.com/Kingsmanvn-Official/ReVanced-Magisk/releases).
+Extensive ReVanced builder  
+
+Get the [latest CI release](https://github.com/j-hc/revanced-magisk-module/releases).
 
 [**mindetach module**](https://github.com/j-hc/mindetach-magisk) in the releases section detaches YouTube and YouTube Music from Play Store and blocks it from updating them.
 
@@ -15,6 +18,7 @@ Get the [latest CI release](https://github.com/Kingsmanvn-Official/ReVanced-Magi
  * Can build Magisk modules and non-root APKs
  * Updated daily with the latest versions of apps and patches
  * Cleans APKs
+ * Optimize APKs and modules for size
  * Modules
      * recompile invalidated odex for faster usage
      * receive updates from Magisk app
@@ -36,6 +40,7 @@ Get the [latest CI release](https://github.com/Kingsmanvn-Official/ReVanced-Magi
 To add more Revanced apps or build ReVanced Extended `config.toml`, read here [`CONFIG.md`](./CONFIG.md)
 
 To be able to use non-root variants of YouTube and YT Music, install [Vanced MicroG](https://github.com/TeamVanced/VancedMicroG/releases).
+To add more ReVanced apps or build ReVanced Extended `config.toml`, read here [`CONFIG.md`](./CONFIG.md)
 
 # Building Locally
 ## On Termux
