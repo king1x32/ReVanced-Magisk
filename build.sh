@@ -12,13 +12,6 @@ source utils.sh
 
 : >build.md
 
-isoneof() {
-	local i=$1 v
-	shift
-	for v; do [ "$v" = "$i" ] && return 0; done
-	return 1
-}
-
 vtf() {
 	if ! isoneof "${1}" "true" "false"; then
 		abort "ERROR: '${1}' is not a valid option for '${2}': only true or false is allowed"
@@ -26,13 +19,6 @@ vtf() {
 }
 
 toml_prep "$(cat 2>/dev/null "${1:-config.toml}")" || abort "could not find config file '${1}'"
-main_config_t=$(toml_get_table "")
-COMPRESSION_LEVEL=$(toml_get "$main_config_t" compression-level) || abort "ERROR: compression-level is missing"
-ENABLE_MAGISK_UPDATE=$(toml_get "$main_config_t" enable-magisk-update) || abort "ERROR: enable-magisk-update is missing"
-PARALLEL_JOBS=$(toml_get "$main_config_t" parallel-jobs) || abort "ERROR: parallel-jobs is missing"
-BUILD_MINDETACH_MODULE=$(toml_get "$main_config_t" build-mindetach-module) || abort "ERROR: build-mindetach-module is missing"
-LOGGING_F=$(toml_get "$main_config_t" logging-to-file) && vtf "$LOGGING_F" "logging-to-file" || LOGGING_F=false
-
 
 # -- Main config --
 main_config_t=$(toml_get_table "")
@@ -55,13 +41,6 @@ RV_BRAND_F=${RV_BRAND,,}
 RV_BRAND_F=${RV_BRAND_F// /-}
 PREBUILTS_DIR="${TEMP_DIR}/tools-${RV_BRAND_F}"
 mkdir -p "$BUILD_DIR" "$PREBUILTS_DIR"
-
-if ((COMPRESSION_LEVEL > 9)) || ((COMPRESSION_LEVEL < 0)); then abort "compression-level must be from 0 to 9"; fi
-if [ "${DRYRUN:-}" = true ]; then set_prebuilts; else get_prebuilts || set_prebuilts; fi
-if [ "$BUILD_MINDETACH_MODULE" = true ]; then : >$PKGS_LIST; fi
-if [ "$LOGGING_F" = true ]; then mkdir -p logs; fi
-jq --version >/dev/null || abort "\`jq\` is not installed. install it with 'apt install jq' or equivalent"
-get_cmpr
 # -- Main config --
 
 if ((COMPRESSION_LEVEL > 9)) || ((COMPRESSION_LEVEL < 0)); then abort "compression-level must be from 0 to 9"; fi
@@ -88,7 +67,6 @@ for table_name in $(toml_get_table_names); do
 	app_args[allow_alpha_version]=$(toml_get "$t" allow-alpha-version) && vtf "${app_args[allow_alpha_version]}" "allow-alpha-version" || app_args[allow_alpha_version]=false
 	app_args[build_mode]=$(toml_get "$t" build-mode) && {
 		if ! isoneof "${app_args[build_mode]}" both apk module; then
-			abort "ERROR: '${app_args[build_mode]}' is not a valid option for '${table_name}': only 'both', 'apk' or 'module' is allowed"
 			abort "ERROR: build-mode '${app_args[build_mode]}' is not a valid option for '${table_name}': only 'both', 'apk' or 'module' is allowed"
 		fi
 	} || app_args[build_mode]=apk
@@ -107,13 +85,6 @@ for table_name in $(toml_get_table_names); do
 		app_args[dl_from]=apkmirror
 	} || app_args[apkmirror_dlurl]=""
 	if [ -z "${app_args[dl_from]:-}" ]; then
-		abort "ERROR: neither 'apkmirror_dlurl' nor 'uptodown_dlurl' were not set for '$table_name'."
-	fi
-	app_args[arch]=$(toml_get "$t" arch) && {
-		if ! isoneof "${app_args[arch]}" all arm64-v8a arm-v7a; then
-			abort "ERROR: '${app_args[arch]}' is not a valid option for 'arch': only 'all', 'arm64-v8a', 'arm-v7a' is allowed"
-		fi
-	} || app_args[arch]="all"
 		abort "ERROR: no 'apkmirror_dlurl', 'uptodown_dlurl', 'apkmonk_dlurl' were set for '$table_name'."
 	fi
 	app_args[arch]=$(toml_get "$t" arch) && {
@@ -134,7 +105,6 @@ for table_name in $(toml_get_table_names); do
 	if [ "$LOGGING_F" = true ]; then
 		logf=logs/"${table_name,,}.log"
 		: >"$logf"
-		(build_rv 2>&1 app_args | tee "$logf") &
 		{ build_rv 2>&1 app_args | tee "$logf"; } &
 	else
 		build_rv app_args &
