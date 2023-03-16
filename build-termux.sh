@@ -66,7 +66,7 @@ PWD=$(pwd)
 mkdir -p ~/storage/downloads/ReVanced-Magisk
 for op in *; do
 	[ "$op" = "*" ] && continue
-	cp -f "${PWD}/${op}" ~/storage/downloads/ReVanced-Magisk/"${op}"
+	mv -f "${PWD}/${op}" ~/storage/downloads/revanced-magisk-module/"${op}"
 done
 
 pr "Outputs are available in /sdcard/Download/ReVanced-Magisk folder"
