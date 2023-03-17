@@ -16,8 +16,6 @@ jobs:
       - name: Should build?
         id: should_build
         shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           source utils.sh
           toml_prep "$(cat config.toml)"
@@ -50,7 +48,8 @@ jobs:
           }
           is_integrations_latest() {
             mkdir -p temp
-            declare -r last_integrations_url=$(wget -nv --header="Authorization: token ${{ secrets.GITHUB_TOKEN }}" -O- https://api.github.com/repos/revanced/revanced-integrations/releases/latest - | json_get 'browser_download_url')
+            INTEGRATIONS_SRC=$(toml_get "$(toml_get_table "")" integrations-source) || INTEGRATIONS_SRC="revanced/revanced-integrations"
+            declare -r last_integrations_url=$(gh_req https://api.github.com/repos/${INTEGRATIONS_SRC}/releases/latest - | json_get 'browser_download_url')
             declare -r last_integrations=${last_integrations_url##*/}
             cur_integrations=$(sed -n 's/.*Integrations: \(.*\)/\1/p' build.md | xargs)
 
@@ -63,7 +62,7 @@ jobs:
             last_patches_url=$(gh_req https://api.github.com/repos/${PATCHES_SRC}/releases/latest - | json_get 'browser_download_url' | grep 'jar')
             last_patches=${last_patches_url##*/}
             cur_patches=$(sed -n 's/.*Patches: \(.*\)/\1/p' build.md | xargs)
-            
+
             echo "current patches version: $cur_patches"
             echo "latest patches version: $last_patches"
             [ "$cur_patches" != "$last_patches" ] # test success=>build, fail=>dont build
