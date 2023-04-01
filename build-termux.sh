@@ -19,6 +19,8 @@ ask() {
     return 1
 }
 
+CFG=config.toml
+
 if [ ! -f ~/.rvmm_"$(date '+%Y%m')" ]; then
     pr "Setting up environment..."
     yes "" | pkg update -y && pkg install -y openssl git wget jq openjdk-17 zip
@@ -26,32 +28,35 @@ if [ ! -f ~/.rvmm_"$(date '+%Y%m')" ]; then
 fi
 
 if [ -f build.sh ]; then cd ..; fi
-if [ -d ReVanced-Magisk ]; then
-    pr "Checking for ReVanced-Magisk updates"
-    git -C ReVanced-Magisk fetch
-    if git -C ReVanced-Magisk status | grep -q 'is behind'; then
-        pr "RaVanced-Magisk already is not synced with upstream."
-        pr "Cloning ReVanced-Magisk. config.toml will be preserved."
-        cp -f ReVanced-Magisk/config.toml .
-        rm -rf ReVanced-Magisk
-        git clone https://github.com/Kingsmanvn-Official/ReVanced-Magisk --recurse --depth 1
-        mv -f config.toml ReVanced-Magisk/config.toml
+if [ -d Revanced-Magisk ]; then
+    pr "Checking for Revanced-Magisk updates"
+    git -C Revanced-Magisk fetch
+    if git -C Revanced-Magisk status | grep -q 'is behind'; then
+        pr "Revanced-Magisk already is not synced with upstream."
+        pr "Cloning Revanced-Magisk. config.toml will be preserved."
+        cp -f Revanced-Magisk/config*toml .
+        rm -rf Revanced-Magisk
+        git clone https://github.com/Kingsmanvn-Official/Revanced-Magisk --recurse --depth 1
+        mv -f config*toml Revanced-Magisk/
     fi
 else
-    pr "Cloning ReVanced-Magisk."
-    git clone https://github.com/Kingsmanvn-Official/ReVanced-Magisk --recurse --depth 1
-    sed -i '/^enabled.*/d; /^\[.*\]/a enabled = false' ReVanced-Magisk/config.toml
+    pr "Cloning Revanced-Magisk."
+    git clone https://github.com/Kingsmanvn-Official/Revanced-Magisk --recurse --depth 1
+    sed -i '/^enabled.*/d; /^\[.*\]/a enabled = false' Revanced-Magisk/config*toml
 fi
 cd ReVanced-Magisk
 chmod +x build.sh build-termux.sh
 
-if ask "Do you want to open the config.toml for customizations? [y/n]"; then
-    nano config.toml
+if ! ask "Select config (y=revanced n=revanced extended)"; then
+    CFG=config-rv-ex.toml
+fi
+if ask "Do you want to open the config for customizations? [y/n]"; then
+    nano $CFG
 fi
 if ! ask "Setup is done. Do you want to start building? [y/n]"; then
     exit 0
 fi
-./build.sh
+./build.sh $CFG
 
 cd build
 pr "Ask for storage permission"
