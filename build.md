@@ -5,6 +5,7 @@ TikTok: 32.0.3
 Install [inotia00 Vanced Microg](https://github.com/inotia00/VancedMicroG/releases) for non-root YouTube and YT Music  
 
 [ReVanced-Magisk](https://github.com/kingsmanvn1112/ReVanced-Magisk)  
+
 Credits to our upstream repository [revanced-magisk-module](https://github.com/j-hc/revanced-magisk-module)  
 
 Changelog:  
