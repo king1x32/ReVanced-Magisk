@@ -1,5 +1,4 @@
 Music-Extended: 6.25.53  
-YouTube-Extended: 18.40.34  
 TikTok: 30.8.4  
 
 Install [inotia00 Vanced Microg](https://github.com/inotia00/VancedMicroG/releases) for non-root YouTube and YT Music  
