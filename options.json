@@ -1,1 +1,16 @@
-[]
+        
+[
+    {
+      "patchName": "Custom package name",
+      "options": [
+        {
+          "key": "PackageNameYouTube",
+          "value": "com.google.android.youtube"
+        },
+        {
+          "key": "PackageNameYouTubeMusic",
+          "value": "com.google.android.apps.youtube.music"
+        }
+      ]
+    }
+]
