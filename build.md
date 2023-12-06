@@ -9,9 +9,9 @@ Credits to our upstream repository [revanced-magisk-module](https://github.com/j
 
 Changelog:  
 CLI: inotia00/revanced-cli-4.3.1-all.jar  
-Integrations: inotia00/revanced-integrations-0.126.1.apk  
-Patches: inotia00/revanced-patches-2.203.1.jar  
-[Changelog](https://github.com/inotia00/revanced-patches/releases/tag/v2.203.1)  
+Integrations: inotia00/revanced-integrations-0.126.2.apk  
+Patches: inotia00/revanced-patches-2.203.2.jar  
+[Changelog](https://github.com/inotia00/revanced-patches/releases/tag/v2.203.2)  
 
 Skipped:  
 Patches: ReVanced/revanced-patches-2.202.0.jar    
