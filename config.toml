@@ -36,6 +36,7 @@ cli-source = "inotia00/revanced-cli"
 rv-brand = "ReVanced Extended"
 build-mode = "both"
 archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.youtube"
+arch = "both"
 
 # [Twitter]
 # build-mode = "apk"
