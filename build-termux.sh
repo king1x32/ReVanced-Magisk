@@ -34,12 +34,12 @@ if [ -d ReVanced-Magisk ]; then
 		pr "Cloning ReVanced-Magisk. config.toml will be preserved."
 		cp -f ReVanced-Magisk/config.toml .
 		rm -rf ReVanced-Magisk
-		git clone https://github.com/kingsmanvn1112/ReVanced-Magisk --recurse --depth 1
+		git clone https://github.com/kingsmanvn1x32/ReVanced-Magisk --recurse --depth 1
 		mv -f config.toml ReVanced-Magisk/config.toml
 	fi
 else
 	pr "Cloning ReVanced-Magisk."
-	git clone https://github.com/kingsmanvn1112/ReVanced-Magisk --recurse --depth 1
+	git clone https://github.com/kingsmanvn1x32/ReVanced-Magisk --recurse --depth 1
 	sed -i '/^enabled.*/d; /^\[.*\]/a enabled = false' ReVanced-Magisk/config.toml
 fi
 cd ReVanced-Magisk

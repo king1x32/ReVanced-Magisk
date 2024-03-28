@@ -2,12 +2,12 @@
 
 # ReVanced Magisk Module
 [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/revanced_kingsmanvn)
-[![CI](https://github.com/kingsmanvn1112/ReVanced-Magisk/actions/workflows/ci.yml/badge.svg?event=schedule)](https://github.com/kingsmanvn1112/ReVanced-Magisk/actions/workflows/ci.yml)
-[![Latest release](https://img.shields.io/github/v/release/kingsmanvn1112/ReVanced-Magisk?style=flat-square)](https://github.com/kingsmanvn1112/ReVanced-Magisk/releases/latest)
+[![CI](https://github.com/kingsmanvn1x32/ReVanced-Magisk/actions/workflows/ci.yml/badge.svg?event=schedule)](https://github.com/kingsmanvn1x32/ReVanced-Magisk/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/kingsmanvn1x32/ReVanced-Magisk?style=flat-square)](https://github.com/kingsmanvn1x32/ReVanced-Magisk/releases/latest)
 
-Extensive ReVanced builder  
+Extensive ReVanced builder
 
-Use [**zygisk-detach**](https://github.com/j-hc/zygisk-detach) to detach YouTube and YT Music from Play Store if you are using magisk modules. 
+Use [**zygisk-detach**](https://github.com/j-hc/zygisk-detach) to detach YouTube and YT Music from Play Store if you are using magisk modules.
 
 <details><summary><big>Features</big></summary>
 <ul>
@@ -31,7 +31,7 @@ Note that the <a href="../../actions/workflows/ci.yml">CI workflow</a> is schedu
 [**See the list of patches**](https://j-hc.github.io/rvmm-config-gen/)
 
  * Star the repo :eyes:
- * [Fork the repo](https://github.com/kingsmanvn1112/ReVanced-Magisk/fork) or use it as a template
+ * [Fork the repo](https://github.com/kingsmanvn1x32/ReVanced-Magisk/fork) or use it as a template
  * Customize [`config.toml`](./config.toml) using [rvmm-config-gen](https://j-hc.github.io/rvmm-config-gen/)
  * Run the build [workflow](../../actions/workflows/build.yml)
  * Grab your modules and APKs from [releases](../../releases)
@@ -41,12 +41,12 @@ also see here [`CONFIG.md`](./CONFIG.md)
 ## Building Locally
 ### On Termux
 ```console
-bash <(curl -sSf https://raw.githubusercontent.com/kingsmanvn1112/ReVanced-Magisk/main/build-termux.sh)
+bash <(curl -sSf https://raw.githubusercontent.com/kingsmanvn1x32/ReVanced-Magisk/main/build-termux.sh)
 ```
 
 ### On Desktop
 ```console
-$ git clone https://github.com/kingsmanvn1112/ReVanced-Magisk
+$ git clone https://github.com/kingsmanvn1x32/ReVanced-Magisk
 $ cd ReVanced-Magisk
 $ ./build.sh
 ```
