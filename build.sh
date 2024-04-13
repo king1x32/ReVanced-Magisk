@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
+shopt -s nullglob
 trap "rm -rf temp/*tmp.* temp/*/*tmp.*; exit 130" INT
 
-if [ "${1:-}" = "clean" ]; then
-    rm -rf temp build logs build.md
-    exit 0
+if [ "${1-}" = "clean" ]; then
+	rm -rf temp build logs build.md
+	exit 0
 fi
 
 source utils.sh
@@ -28,16 +29,16 @@ DEF_CLI_SRC=$(toml_get "$main_config_t" cli-source) || DEF_CLI_SRC="j-hc/revance
 DEF_RV_BRAND=$(toml_get "$main_config_t" rv-brand) || DEF_RV_BRAND="ReVanced"
 mkdir -p $TEMP_DIR $BUILD_DIR
 
-if [ "${2:-}" = "--config-update" ]; then
-    config_update
-    exit 0
+if [ "${2-}" = "--config-update" ]; then
+	config_update
+	exit 0
 fi
 
 : >build.md
 ENABLE_MAGISK_UPDATE=$(toml_get "$main_config_t" enable-magisk-update) || ENABLE_MAGISK_UPDATE=true
-if [ "$ENABLE_MAGISK_UPDATE" = true ] && [ -z "${GITHUB_REPOSITORY:-}" ]; then
-    pr "You are building locally. Magisk updates will not be enabled."
-    ENABLE_MAGISK_UPDATE=false
+if [ "$ENABLE_MAGISK_UPDATE" = true ] && [ -z "${GITHUB_REPOSITORY-}" ]; then
+	pr "You are building locally. Magisk updates will not be enabled."
+	ENABLE_MAGISK_UPDATE=false
 fi
 # -----------------
 
@@ -81,64 +82,64 @@ for table_name in $(toml_get_table_names); do
     cli_src=$(toml_get "$t" cli-source) || cli_src=$DEF_CLI_SRC
     cli_ver=$(toml_get "$t" cli-version) || cli_ver=$DEF_CLI_VER
 
-    if ! set_prebuilts "$integrations_src" "$patches_src" "$cli_src" "$integrations_ver" "$patches_ver" "$cli_ver"; then
-        if ! RVP="$(get_rv_prebuilts "$integrations_src" "$patches_src" "$integrations_ver" "$patches_ver" "$cli_src" "$cli_ver")"; then
-            abort "could not download rv prebuilts"
-        fi
-        read -r rv_cli_jar rv_integrations_apk rv_patches_jar rv_patches_json <<<"$RVP"
-        app_args[cli]=$rv_cli_jar
-        app_args[integ]=$rv_integrations_apk
-        app_args[ptjar]=$rv_patches_jar
-        app_args[ptjs]=$rv_patches_json
-    fi
-    if [[ -v cliriplib[${app_args[cli]}] ]]; then app_args[riplib]=${cliriplib[${app_args[cli]}]}; else
-        if [[ $(java -jar "${app_args[cli]}" patch 2>&1) == *rip-lib* ]]; then
-            cliriplib[${app_args[cli]}]=true
-            app_args[riplib]=true
-        else
-            cliriplib[${app_args[cli]}]=false
-            app_args[riplib]=false
-        fi
-    fi
-    if [ "${app_args[riplib]}" = "true" ] && [ "$(toml_get "$t" riplib)" = "false" ]; then app_args[riplib]=false; fi
-    app_args[rv_brand]=$(toml_get "$t" rv-brand) || app_args[rv_brand]="$DEF_RV_BRAND"
+	if ! set_prebuilts "$integrations_src" "$patches_src" "$cli_src" "$integrations_ver" "$patches_ver" "$cli_ver"; then
+		if ! RVP="$(get_rv_prebuilts "$cli_src" "$cli_ver" "$integrations_src" "$integrations_ver" "$patches_src" "$patches_ver")"; then
+			abort "could not download rv prebuilts"
+		fi
+		read -r rv_cli_jar rv_integrations_apk rv_patches_jar rv_patches_json <<<"$RVP"
+		app_args[cli]=$rv_cli_jar
+		app_args[integ]=$rv_integrations_apk
+		app_args[ptjar]=$rv_patches_jar
+		app_args[ptjs]=$rv_patches_json
+	fi
+	if [[ -v cliriplib[${app_args[cli]}] ]]; then app_args[riplib]=${cliriplib[${app_args[cli]}]}; else
+		if [[ $(java -jar "${app_args[cli]}" patch 2>&1) == *rip-lib* ]]; then
+			cliriplib[${app_args[cli]}]=true
+			app_args[riplib]=true
+		else
+			cliriplib[${app_args[cli]}]=false
+			app_args[riplib]=false
+		fi
+	fi
+	if [ "${app_args[riplib]}" = "true" ] && [ "$(toml_get "$t" riplib)" = "false" ]; then app_args[riplib]=false; fi
+	app_args[rv_brand]=$(toml_get "$t" rv-brand) || app_args[rv_brand]="$DEF_RV_BRAND"
 
-    app_args[excluded_patches]=$(toml_get "$t" excluded-patches) || app_args[excluded_patches]=""
-    if [ -n "${app_args[excluded_patches]}" ] && [[ "${app_args[excluded_patches]}" != *'"'* ]]; then abort "patch names inside excluded-patches must be quoted"; fi
-    app_args[included_patches]=$(toml_get "$t" included-patches) || app_args[included_patches]=""
-    if [ -n "${app_args[included_patches]}" ] && [[ "${app_args[included_patches]}" != *'"'* ]]; then abort "patch names inside included-patches must be quoted"; fi
-    app_args[exclusive_patches]=$(toml_get "$t" exclusive-patches) && vtf "${app_args[exclusive_patches]}" "exclusive-patches" || app_args[exclusive_patches]=false
-    app_args[version]=$(toml_get "$t" version) || app_args[version]="auto"
-    app_args[app_name]=$(toml_get "$t" app-name) || app_args[app_name]=$table_name
-    app_args[table]=$table_name
-    app_args[build_mode]=$(toml_get "$t" build-mode) && {
-        if ! isoneof "${app_args[build_mode]}" both apk module; then
-            abort "ERROR: build-mode '${app_args[build_mode]}' is not a valid option for '${table_name}': only 'both', 'apk' or 'module' is allowed"
-        fi
-    } || app_args[build_mode]=apk
-    app_args[uptodown_dlurl]=$(toml_get "$t" uptodown-dlurl) && {
-        app_args[uptodown_dlurl]=${app_args[uptodown_dlurl]%/}
-        app_args[uptodown_dlurl]=${app_args[uptodown_dlurl]%download}
-        app_args[uptodown_dlurl]=${app_args[uptodown_dlurl]%/}
-        app_args[dl_from]=uptodown
-    } || app_args[uptodown_dlurl]=""
-    app_args[apkmonk_dlurl]=$(toml_get "$t" apkmonk-dlurl) && {
-        app_args[apkmonk_dlurl]=${app_args[apkmonk_dlurl]%/}
-        app_args[dl_from]=apkmonk
-    } || app_args[apkmonk_dlurl]=""
-    app_args[apkmirror_dlurl]=$(toml_get "$t" apkmirror-dlurl) && {
-        app_args[apkmirror_dlurl]=${app_args[apkmirror_dlurl]%/}
-        app_args[dl_from]=apkmirror
-    } || app_args[apkmirror_dlurl]=""
-    app_args[archive_dlurl]=$(toml_get "$t" archive-dlurl) && {
-        app_args[archive_dlurl]=${app_args[archive_dlurl]%/}
-        app_args[dl_from]=archive
-    } || app_args[archive_dlurl]=""
-    if [ -z "${app_args[dl_from]:-}" ]; then abort "ERROR: no 'apkmirror_dlurl', 'uptodown_dlurl' or 'apkmonk_dlurl' option was set for '$table_name'."; fi
-    app_args[arch]=$(toml_get "$t" arch) || app_args[arch]="all"
-    if [ "${app_args[arch]}" != "both" ] && [ "${app_args[arch]}" != "all" ] && [[ "${app_args[arch]}" != "arm64-v8a"* ]] && [[ "${app_args[arch]}" != "arm-v7a"* ]]; then
-        abort "wrong arch '${app_args[arch]}' for '$table_name'"
-    fi
+	app_args[excluded_patches]=$(toml_get "$t" excluded-patches) || app_args[excluded_patches]=""
+	if [ -n "${app_args[excluded_patches]}" ] && [[ ${app_args[excluded_patches]} != *'"'* ]]; then abort "patch names inside excluded-patches must be quoted"; fi
+	app_args[included_patches]=$(toml_get "$t" included-patches) || app_args[included_patches]=""
+	if [ -n "${app_args[included_patches]}" ] && [[ ${app_args[included_patches]} != *'"'* ]]; then abort "patch names inside included-patches must be quoted"; fi
+	app_args[exclusive_patches]=$(toml_get "$t" exclusive-patches) && vtf "${app_args[exclusive_patches]}" "exclusive-patches" || app_args[exclusive_patches]=false
+	app_args[version]=$(toml_get "$t" version) || app_args[version]="auto"
+	app_args[app_name]=$(toml_get "$t" app-name) || app_args[app_name]=$table_name
+	app_args[table]=$table_name
+	app_args[build_mode]=$(toml_get "$t" build-mode) && {
+		if ! isoneof "${app_args[build_mode]}" both apk module; then
+			abort "ERROR: build-mode '${app_args[build_mode]}' is not a valid option for '${table_name}': only 'both', 'apk' or 'module' is allowed"
+		fi
+	} || app_args[build_mode]=apk
+	app_args[uptodown_dlurl]=$(toml_get "$t" uptodown-dlurl) && {
+		app_args[uptodown_dlurl]=${app_args[uptodown_dlurl]%/}
+		app_args[uptodown_dlurl]=${app_args[uptodown_dlurl]%download}
+		app_args[uptodown_dlurl]=${app_args[uptodown_dlurl]%/}
+		app_args[dl_from]=uptodown
+	} || app_args[uptodown_dlurl]=""
+	app_args[apkmonk_dlurl]=$(toml_get "$t" apkmonk-dlurl) && {
+		app_args[apkmonk_dlurl]=${app_args[apkmonk_dlurl]%/}
+		app_args[dl_from]=apkmonk
+	} || app_args[apkmonk_dlurl]=""
+	app_args[apkmirror_dlurl]=$(toml_get "$t" apkmirror-dlurl) && {
+		app_args[apkmirror_dlurl]=${app_args[apkmirror_dlurl]%/}
+		app_args[dl_from]=apkmirror
+	} || app_args[apkmirror_dlurl]=""
+	app_args[archive_dlurl]=$(toml_get "$t" archive-dlurl) && {
+		app_args[archive_dlurl]=${app_args[archive_dlurl]%/}
+		app_args[dl_from]=archive
+	} || app_args[archive_dlurl]=""
+	if [ -z "${app_args[dl_from]-}" ]; then abort "ERROR: no 'apkmirror_dlurl', 'uptodown_dlurl' or 'apkmonk_dlurl' option was set for '$table_name'."; fi
+	app_args[arch]=$(toml_get "$t" arch) || app_args[arch]="all"
+	if [ "${app_args[arch]}" != "both" ] && [ "${app_args[arch]}" != "all" ] && [[ ${app_args[arch]} != "arm64-v8a"* ]] && [[ ${app_args[arch]} != "arm-v7a"* ]]; then
+		abort "wrong arch '${app_args[arch]}' for '$table_name'"
+	fi
 
     app_args[include_stock]=$(toml_get "$t" include-stock) || app_args[include_stock]=true && vtf "${app_args[include_stock]}" "include-stock"
     app_args[dpi]=$(toml_get "$t" apkmirror-dpi) || app_args[dpi]="nodpi"
