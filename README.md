@@ -1,5 +1,3 @@
-#### ⚠️ Do not download modules from 3rd party sources like random websites you found on Google. There are many that uses my modules and impersonates ReVanced.
-
 # ReVanced Magisk Module
 [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/revanced_kingsmanvn)
 [![CI](https://github.com/kingsmanvn1x32/ReVanced-Magisk/actions/workflows/ci.yml/badge.svg?event=schedule)](https://github.com/kingsmanvn1x32/ReVanced-Magisk/actions/workflows/ci.yml)
@@ -28,7 +26,6 @@ Note that the <a href="../../actions/workflows/ci.yml">CI workflow</a> is schedu
 </details>
 
 ## To include/exclude patches or patch other apps
-[**See the list of patches**](https://j-hc.github.io/rvmm-config-gen/)
 
  * Star the repo :eyes:
  * [Fork the repo](https://github.com/kingsmanvn1x32/ReVanced-Magisk/fork) or use it as a template
