@@ -1,10 +1,10 @@
-Twitter: 10.40.0-release.0  
 Music-Extended (arm-v7a): 6.50.51  
 Music-Extended (arm64-v8a): 6.50.51  
+Reddit: 2024.18.1  
 Messenger: 457.1.0.45.109  
 Spotify: 8.9.38.494  
+Twitter: 10.40.0-release.0  
 YouTube-Extended: 19.16.39  
-Reddit: 2024.18.1  
 TikTok: 32.5.3  
 
 Install [ReVanced Microg](https://github.com/ReVanced/GmsCore/releases) for non-root YouTube and YT Music APKs  
