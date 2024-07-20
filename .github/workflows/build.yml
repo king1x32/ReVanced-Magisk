@@ -6,9 +6,7 @@ on:
         type: boolean
         required: false
         default: true
-
   workflow_dispatch:
-
 jobs:
   run:
     permissions: write-all
@@ -18,13 +16,11 @@ jobs:
         with:
           distribution: "zulu"
           java-version: "17"
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: true
-
       - name: Update config
         if: ${{ inputs.from_ci }}
         run: |
@@ -34,21 +30,18 @@ jobs:
               echo "$UPDATE_CFG" > config.toml
             fi
           fi
-
       - name: Get next version code
         id: next_ver_code
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "NEXT_VER_CODE=$(TZ='Asia/Ho_Chi_Minh' date +"%Y.%m.%d-%H.%M.%S")" >> $GITHUB_OUTPUT
-
+          echo "NEXT_VER_CODE=$(TZ=UTC-7 date -R '+%Y.%m.%d-%H.%M.%S')" >> $GITHUB_OUTPUT
       - name: Build modules/APKs
         run: ./build.sh config.toml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: $GITHUB_REPOSITORY
           NEXT_VER_CODE: ${{ steps.next_ver_code.outputs.NEXT_VER_CODE }}
-
       - name: Get output
         id: get_output
         run: |
@@ -57,7 +50,6 @@ jobs:
           cat build.md >> "$GITHUB_OUTPUT"
           echo "${DELIM}" >> "$GITHUB_OUTPUT"
           cp -f build.md build.tmp
-
       - name: Upload modules to release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -68,7 +60,6 @@ jobs:
           tag: ${{ steps.next_ver_code.outputs.NEXT_VER_CODE }}
           file_glob: true
           overwrite: true
-
       - name: Update changelog and Magisk update json
         id: update_config
         run: |
@@ -97,14 +88,12 @@ jobs:
           cd ..
 
           find . -name "*-update.json" | grep . || : >dummy-update.json
-
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: update
           skip_checkout: true
           file_pattern: build.md *-update.json
           commit_message: Bump version ${{ steps.next_ver_code.outputs.NEXT_VER_CODE }}
-
       - name: Report to Telegram
         env:
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
