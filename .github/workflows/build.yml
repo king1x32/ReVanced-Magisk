@@ -35,7 +35,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "NEXT_VER_CODE=$(TZ=UTC-7 date -R '+%Y.%m.%d-%H.%M.%S')" >> $GITHUB_OUTPUT
+          echo "NEXT_VER_CODE=$(date -d '+7 hours' +'%Y.%m.%d-%H.%M.%S')" >> $GITHUB_OUTPUT
       - name: Build modules/APKs
         run: ./build.sh config.toml
         env:
