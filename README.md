@@ -1,4 +1,4 @@
-# ReVanced Magisk Module
+# ReVanced Magisk
 [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/revanced_kingsmanvn)
 [![CI](https://github.com/kingsmanvn1x32/ReVanced-Magisk/actions/workflows/ci.yml/badge.svg?event=schedule)](https://github.com/kingsmanvn1x32/ReVanced-Magisk/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/kingsmanvn1x32/ReVanced-Magisk?style=flat-square)](https://github.com/kingsmanvn1x32/ReVanced-Magisk/releases/latest)
@@ -47,3 +47,6 @@ $ git clone https://github.com/kingsmanvn1x32/ReVanced-Magisk
 $ cd ReVanced-Magisk
 $ ./build.sh
 ```
+
+## Credits to our upstream repository
+[revanced-magisk-module](https://github.com/j-hc/revanced-magisk-module)"
