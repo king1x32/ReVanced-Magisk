@@ -29,11 +29,6 @@ version = "auto"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/photos/"
 uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
 
-[Twitch]
-apkmirror-dlurl = "https://www.apkmirror.com/apk/twitch-interactive-inc/twitch/"
-uptodown-dlurl = "https://twitch.en.uptodown.com/android"
-# archive-dlurl = "https://archive.org/download/jhc-apks/apks/tv.twitch.android.app"
-
 [Music-Extended]
 app-name = "Music"
 patches-source = "inotia00/revanced-patches"
@@ -59,6 +54,12 @@ cli-source = "inotia00/revanced-cli"
 rv-brand = "ReVanced Extended"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/redditinc/reddit/"
 # archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.reddit.frontpage"
+
+[Twitch]
+enabled = false
+apkmirror-dlurl = "https://www.apkmirror.com/apk/twitch-interactive-inc/twitch/"
+uptodown-dlurl = "https://twitch.en.uptodown.com/android"
+# archive-dlurl = "https://archive.org/download/jhc-apks/apks/tv.twitch.android.app"
 
 [Twitter]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
