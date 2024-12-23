@@ -4,7 +4,6 @@ IconPackStudio: 2.2 build 016
 Messenger: 439.0.0.29.119  
 Music (arm64-v8a): 7.29.52  
 Music (arm-v7a): 7.29.52  
-Music-Extended (arm64-v8a): 7.16.53  
 Spotify: 9.0.2.459  
 YouTube: 19.47.53  
 
@@ -12,10 +11,9 @@ Install [ReVanced Microg](https://github.com/ReVanced/GmsCore/releases) for non-
 Use [zygisk-detach](https://github.com/j-hc/zygisk-detach) to detach root ReVanced YouTube and YT Music from Play Store  
 
 [ReVanced-Magisk](https://github.com/kingsmanvn1x32/ReVanced-Magisk)  
-CLI: inotia00/revanced-cli-5.0.1-all.jar  
-Patches: inotia00/patches-5.1.3.rvp  
-[Changelog](https://github.com/inotia00/revanced-patches/releases/tag/v5.1.3)
-
 CLI: j-hc/revanced-cli-5.0.0-all.jar  
-Patches: ReVanced/patches-5.7.0.rvp  
-[Changelog](https://github.com/ReVanced/revanced-patches/releases/tag/v5.7.0)  
+Patches: ReVanced/patches-5.7.1.rvp  
+[Changelog](https://github.com/ReVanced/revanced-patches/releases/tag/v5.7.1)  
+
+Skipped:  
+Patches: inotia00/patches-5.1.3.rvp    
