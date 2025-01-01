@@ -26,32 +26,32 @@ until
 do sleep 1; done
 if [ ! -f ~/.rvmm_"$(date '+%Y%m')" ]; then
 	pr "Setting up environment..."
-	yes "" | pkg update -y && pkg install -y openssl git wget jq openjdk-17 zip
+	yes "" | pkg update -y && pkg install -y git curl jq openjdk-17 zip
 	: >~/.rvmm_"$(date '+%Y%m')"
 fi
 mkdir -p /sdcard/Download/ReVanced-Magisk/
 
-if [ ! -d ReVancd-Magisk ]; then
-	pr "Cloning ReVancd-Magisk."
-	git clone https://github.com/kingsmanvn1x32/ReVanced-Magisk --depth 1
-	cd ReVanced-Magisk
-	sed -i '/^enabled.*/d; /^\[.*\]/a enabled = false' config.toml
-	grep -q 'ReVancd-Magisk' ~/.gitconfig 2>/dev/null ||
-		git config --global --add safe.directory ~/ReVancd-Magisk
-else
-	cd ReVancd-Magisk
-	pr "Checking for ReVancd-Magisk updates"
+if [ -d ReVanced-Magisk ] || [ -f config.toml ]; then
+	if [ -d ReVanced-Magisk ]; then cd ReVanced-Magisk; fi
+	pr "Checking for ReVanced-Magisk updates"
 	git fetch
 	if git status | grep -q 'is behind\|fatal'; then
-		pr "ReVancd-Magisk already is not synced with upstream."
-		pr "Cloning ReVancd-Magisk. config.toml will be preserved."
+		pr "ReVanced-Magisk is not synced with upstream."
+		pr "Cloning ReVanced-Magisk. config.toml will be preserved."
 		cd ..
 		cp -f ReVancd-Magisk/config.toml .
 		rm -rf ReVancd-Magisk
-		git clone https://github.com/j-hc/ReVancd-Magisk --recurse --depth 1
+		git clone https://github.com/king1x32/ReVancd-Magisk --recurse --depth 1
 		mv -f config.toml ReVancd-Magisk/config.toml
 		cd ReVancd-Magisk
 	fi
+else
+	pr "Cloning ReVanced-Magisk."
+	git clone https://github.com/king1x32/ReVanced-Magisk --depth 1
+	cd ReVanced-Magisk
+	sed -i '/^enabled.*/d; /^\[.*\]/a enabled = false' config.toml
+	grep -q 'ReVanced-Magisk' ~/.gitconfig 2>/dev/null ||
+		git config --global --add safe.directory ~/ReVanced-Magisk
 fi
 
 [ -f ~/storage/downloads/ReVancd-Magisk/config.toml ] ||
