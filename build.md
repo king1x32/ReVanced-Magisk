@@ -1,6 +1,3 @@
-GooglePhotos: 7.11.0.705590205  
-IconPackStudio: 2.2 build 016  
-Messenger: 439.0.0.29.119  
 Music-Extended: 7.16.53  
 YouTube-Extended: 19.44.39  
 
@@ -9,9 +6,8 @@ Use [zygisk-detach](https://github.com/j-hc/zygisk-detach) to detach root ReVanc
 
 [ReVanced-Magisk](https://github.com/kingsmanvn1x32/ReVanced-Magisk)  
 CLI: inotia00/revanced-cli-5.0.1-all.jar  
-Patches: inotia00/patches-5.1.3.rvp  
-[Changelog](https://github.com/inotia00/revanced-patches/releases/tag/v5.1.3)
+Patches: inotia00/patches-5.2.1.rvp  
+[Changelog](https://github.com/inotia00/revanced-patches/releases/tag/v5.2.1)  
 
-CLI: j-hc/revanced-cli-5.0.0-all.jar  
-Patches: ReVanced/patches-5.8.0.rvp  
-[Changelog](https://github.com/ReVanced/revanced-patches/releases/tag/v5.8.0)  
+Skipped:  
+Patches: ReVanced/patches-5.8.0.rvp    
