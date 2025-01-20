@@ -1,6 +1,6 @@
 {
-  "version": "v7.11.0.705590205 (patches: 5.8.1)",
-  "versionCode": 2025.01.08-08.41.27,
-  "zipUrl": "https://github.com/king1x32/ReVanced-Magisk/releases/download/2025.01.08-08.41.27/googlephotos-revanced-magisk-v7.11.0.705590205-arm64-v8a.zip",
+  "version": "v7.13.0.716414472 (patches: 5.9.0)",
+  "versionCode": 2025.01.20-19.40.45,
+  "zipUrl": "https://github.com/king1x32/ReVanced-Magisk/releases/download/2025.01.20-19.40.45/googlephotos-revanced-magisk-v7.13.0.716414472-arm64-v8a.zip",
   "changelog": "https://raw.githubusercontent.com/king1x32/ReVanced-Magisk/update/build.md"
 }
