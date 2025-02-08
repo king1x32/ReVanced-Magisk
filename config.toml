@@ -51,7 +51,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 # archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.youtube"
 included-patches = "'Enable slide to seek' 'Custom branding'"
-patcher-args = "-OappName=YouTub𝕖𝕏 "
+patcher-args = "-e 'Custom branding name for YouTube' -OappName='YouTub𝕖𝕏'"
 
 [Twitch]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/twitch-interactive-inc/twitch/"
