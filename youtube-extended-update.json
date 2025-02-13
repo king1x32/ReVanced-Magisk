@@ -1,6 +1,6 @@
 {
-  "version": "v19.44.39 (patches: 5.3.1)",
-  "versionCode": 2025.01.22-19.40.39,
-  "zipUrl": "https://github.com/king1x32/ReVanced-Magisk/releases/download/2025.01.22-19.40.39/youtube-revanced-extended-magisk-v19.44.39-arm64-v8a.zip",
+  "version": "v19.44.39 (patches: 5.4.1)",
+  "versionCode": 2025.02.13-19.41.07,
+  "zipUrl": "https://github.com/king1x32/ReVanced-Magisk/releases/download/2025.02.13-19.41.07/youtube-revanced-extended-magisk-v19.44.39-arm64-v8a.zip",
   "changelog": "https://raw.githubusercontent.com/king1x32/ReVanced-Magisk/update/build.md"
 }
