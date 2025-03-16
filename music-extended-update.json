@@ -1,6 +1,6 @@
 {
-  "version": "v7.16.53 (patches: 5.4.2)",
-  "versionCode": 2025.03.07-08.45.53,
-  "zipUrl": "https://github.com/king1x32/ReVanced-Magisk/releases/download/2025.03.07-08.45.53/music-revanced-extended-magisk-v7.16.53-arm64-v8a.zip",
+  "version": "v7.16.53 (patches: 5.5.1)",
+  "versionCode": 2025.03.16-19.38.57,
+  "zipUrl": "https://github.com/king1x32/ReVanced-Magisk/releases/download/2025.03.16-19.38.57/music-revanced-extended-magisk-v7.16.53-arm64-v8a.zip",
   "changelog": "https://raw.githubusercontent.com/king1x32/ReVanced-Magisk/update/build.md"
 }
