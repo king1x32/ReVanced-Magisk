@@ -127,6 +127,9 @@ jobs:
 
           APKs:
           ${APKS}
+
+          *Donate? If you want to support me with a coffee*
+          https://kingsmanvn.pages.dev
           "
           echo "'$MSG'"
           MSG=${MSG:0:9450}
