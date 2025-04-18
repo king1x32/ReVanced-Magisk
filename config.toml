@@ -6,38 +6,41 @@ parallel-jobs = 1
 
 # you can use rvmm-config-gen to generate a config
 
-# [YouTube]
-# build-mode = "both"
-# excluded-patches = ""
-# included-patches = ""
-# version = "auto"
-# apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
-# uptodown-dlurl = "https://youtube.en.uptodown.com/android"
-# # archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.youtube"
-#
-# [Music]
-# build-mode = "both"
-# arch = "both"
-# apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
-# uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
-# # archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.apps.youtube.music"
-
 [GooglePhotos]
 build-mode = "both"
-arch = "arm64-v8a"
+arch = "both"
 version = "auto"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/photos/"
 uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
 
+[YouTube]
+enabled = false
+build-mode = "both"
+excluded-patches = ""
+included-patches = ""
+version = "auto"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
+uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+# archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.youtube"
+
+[Music]
+enabled = false
+build-mode = "both"
+arch = "both"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
+uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
+# archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.apps.youtube.music"
 # dont build on gh actions (https://github.com/j-hc/revanced-magisk-module/issues/554)
+
 [Music-Extended]
 app-name = "Music"
 patches-source = "inotia00/revanced-patches"
 cli-source = "inotia00/revanced-cli"
 rv-brand = "ReVanced Extended"
 build-mode = "both"
-arch = "arm64-v8a"
+arch = "both"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
+uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
 # archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.apps.youtube.music"
 
 [YouTube-Extended]
@@ -46,7 +49,7 @@ patches-source = "inotia00/revanced-patches"
 cli-source = "inotia00/revanced-cli"
 rv-brand = "ReVanced Extended"
 build-mode = "both"
-arch = "arm64-v8a"
+arch = "both"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 # archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.youtube"
@@ -54,25 +57,25 @@ included-patches = "'Enable slide to seek' 'Custom branding'"
 patcher-args = "-e 'Custom branding name for YouTube' -OappName='YouTub𝕖𝕏'"
 
 [Twitch]
+arch = "both"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/twitch-interactive-inc/twitch/"
 uptodown-dlurl = "https://twitch.en.uptodown.com/android"
-arch = "arm64-v8a"
 # archive-dlurl = "https://archive.org/download/jhc-apks/apks/tv.twitch.android.app"
 
 [Twitter]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 build-mode = "apk"
-arch = "arm64-v8a"
+arch = "both"
 dpi = "120-640dpi"
 # archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.twitter.android"
 
 [TikTok]
+arch = "both"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/tiktok-pte-ltd/tik-tok/"
 uptodown-dlurl = "https://tiktok.en.uptodown.com/android"
 # archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.zhiliaoapp.musically"
 included-patches = "'SIM spoof'"
-arch = "arm64-v8a"
 
 [Messenger]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/facebook-2/messenger/"
@@ -80,11 +83,12 @@ arch = "arm64-v8a"
 
 [Spotify]
 uptodown-dlurl = "https://spotify.en.uptodown.com/android"
-arch = "arm64-v8a"
+version = "9.0.36.683"
+arch = "both"
 
 [IconPackStudio]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/smart-launcher-team/icon-pack-studio/"
-arch = "arm64-v8a"
+arch = "both"
 
 [Facebook]
 arch = "arm64-v8a"
