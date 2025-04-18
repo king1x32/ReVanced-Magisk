@@ -3,6 +3,7 @@ GooglePhotos (arm64-v8a): 7.25.0.747549628
 GooglePhotos (arm-v7a): 7.25.0.747549628  
 IconPackStudio (arm64-v8a): 2.2 build 016  
 IconPackStudio (arm-v7a): 2.2 build 016  
+Messenger: 439.0.0.29.119  
 Music-Extended (arm64-v8a): 8.05.51  
 Music-Extended (arm-v7a): 8.05.51  
 Spotify (arm64-v8a): 9.0.36.683  
