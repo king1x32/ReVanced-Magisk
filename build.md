@@ -1,12 +1,15 @@
 Facebook: 490.0.0.63.82  
 GooglePhotos (arm64-v8a): 7.25.0.747549628  
 GooglePhotos (arm-v7a): 7.25.0.747549628  
-IconPackStudio: 2.2 build 016  
+IconPackStudio (arm64-v8a): 2.2 build 016  
+IconPackStudio (arm-v7a): 2.2 build 016  
 Messenger: 439.0.0.29.119  
-Music-Extended (arm64-v8a): 8.05.51  
-Spotify: 9.0.36.683  
-Twitch: 24.0.0  
-Twitter: 10.84.0-release.0  
+Spotify (arm64-v8a): 9.0.36.683  
+Spotify (arm-v7a): 9.0.36.683  
+Twitch (arm64-v8a): 24.0.0  
+Twitch (arm-v7a): 24.0.0  
+Twitter (arm64-v8a): 10.84.0-release.0  
+Twitter (arm-v7a): 10.84.0-release.0  
 
 Install [ReVanced Microg](https://github.com/ReVanced/GmsCore/releases) for non-root YouTube and YT Music APKs  
 Use [zygisk-detach](https://github.com/j-hc/zygisk-detach) to detach root ReVanced YouTube and YT Music from Play Store  
