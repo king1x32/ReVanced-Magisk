@@ -1,28 +1,20 @@
 Facebook: 490.0.0.63.82  
-GooglePhotos (arm64-v8a): 7.25.0.747549628  
-GooglePhotos (arm-v7a): 7.25.0.747549628  
+GooglePhotos (arm64-v8a): 7.26.0.749619146  
 IconPackStudio (arm64-v8a): 2.2 build 016  
 IconPackStudio (arm-v7a): 2.2 build 016  
 Messenger: 439.0.0.29.119  
-Music-Extended (arm64-v8a): 8.05.51  
-Music-Extended (arm-v7a): 8.05.51  
 Spotify (arm64-v8a): 9.0.36.683  
 Spotify (arm-v7a): 9.0.36.683  
-Twitch (arm64-v8a): 24.0.0  
-Twitch (arm-v7a): 24.0.0  
-Twitter (arm64-v8a): 10.84.0-release.0  
-Twitter (arm-v7a): 10.84.0-release.0  
-YouTube-Extended (arm64-v8a): 19.47.53  
-YouTube-Extended (arm-v7a): 19.47.53  
+Twitter (arm64-v8a): 10.86.0-release.0  
 
 Install [ReVanced Microg](https://github.com/ReVanced/GmsCore/releases) for non-root YouTube and YT Music APKs  
 Use [zygisk-detach](https://github.com/j-hc/zygisk-detach) to detach root ReVanced YouTube and YT Music from Play Store  
 
-[ReVanced-Magisk](https://github.com/kingsmanvn1x32/ReVanced-Magisk)  
-CLI: inotia00/revanced-cli-5.0.1-all.jar  
-Patches: inotia00/patches-5.6.2.rvp  
-[Changelog](https://github.com/inotia00/revanced-patches/releases/tag/v5.6.2)
-
+[ReVanced-Magisk](https://github.com/kingsmanvn1x32/ReVanced-Magisk)
+  
 CLI: j-hc/revanced-cli-5.0.0-all.jar  
-Patches: ReVanced/patches-5.20.1.rvp  
-[Changelog](https://github.com/ReVanced/revanced-patches/releases/tag/v5.20.1)  
+Patches: ReVanced/patches-5.21.0.rvp  
+[Changelog](https://github.com/ReVanced/revanced-patches/releases/tag/v5.21.0)  
+
+Skipped:  
+Patches: inotia00/patches-5.6.2.rvp    
