@@ -7,7 +7,6 @@ parallel-jobs = 1
 # you can use rvmm-config-gen to generate a config
 
 [YouTube]
-enabled = false
 build-mode = "both"
 excluded-patches = ""
 included-patches = ""
@@ -17,7 +16,6 @@ uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.youtube"
 
 [Music]
-enabled = false
 build-mode = "both"
 arch = "both"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
@@ -37,7 +35,6 @@ archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.spotify.music"
 arch = "both"
 
 # dont build on gh actions (https://github.com/j-hc/revanced-magisk-module/issues/554)
-
 [Music-Extended]
 app-name = "Music"
 patches-source = "inotia00/revanced-patches"
@@ -46,7 +43,8 @@ rv-brand = "ReVanced Extended"
 build-mode = "both"
 arch = "both"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
-# archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.apps.youtube.music"
+uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.apps.youtube.music"
 
 [YouTube-Extended]
 app-name = "YouTube"
@@ -56,7 +54,8 @@ rv-brand = "ReVanced Extended"
 build-mode = "both"
 arch = "both"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
-# archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.youtube"
+uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
+archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.youtube"
 included-patches = "'Enable slide to seek' 'Custom branding'"
 patcher-args = "-e 'Custom branding name for YouTube' -OappName='YouTub𝕖𝕏'"
 
