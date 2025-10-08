@@ -1,6 +1,6 @@
 {
-  "version": "v8.10.52 (patches 5.41.0)",
-  "versionCode": 2025.09.27-19.15.29,
-  "zipUrl": "https://github.com/king1x32/ReVanced-Magisk/releases/download/2025.09.27-19.15.29/music-revanced-magisk-v8.10.52-arm-v7a.zip",
+  "version": "v8.10.52 (patches 5.42.1)",
+  "versionCode": 2025.10.08-19.19.24,
+  "zipUrl": "https://github.com/king1x32/ReVanced-Magisk/releases/download/2025.10.08-19.19.24/music-revanced-magisk-v8.10.52-arm-v7a.zip",
   "changelog": "https://raw.githubusercontent.com/king1x32/ReVanced-Magisk/update/build.md"
 }
