@@ -1,6 +1,6 @@
 {
-  "version": "v20.05.46 (patches 5.12.1)",
-  "versionCode": 2025.10.04-19.15.33,
-  "zipUrl": "https://github.com/king1x32/ReVanced-Magisk/releases/download/2025.10.04-19.15.33/youtube-revanced-extended-magisk-v20.05.46-arm-v7a.zip",
+  "version": "v20.05.46 (patches 5.13.1)",
+  "versionCode": 2025.11.15-19.16.36,
+  "zipUrl": "https://github.com/king1x32/ReVanced-Magisk/releases/download/2025.11.15-19.16.36/youtube-revanced-extended-magisk-v20.05.46-arm-v7a.zip",
   "changelog": "https://raw.githubusercontent.com/king1x32/ReVanced-Magisk/update/build.md"
 }
