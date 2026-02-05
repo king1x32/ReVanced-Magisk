@@ -34,17 +34,7 @@ am force-stop "$PKG_NAME"
 
 if ! pmex path "$PKG_NAME" >&2; then
 	if pmex install-existing "$PKG_NAME" >&2; then
-		BASEPATH=$(pmex path "$PKG_NAME") || abort "ERROR: pm path failed $BASEPATH"
-		echo >&2 "'$BASEPATH'"
-		BASEPATH=${BASEPATH##*:} BASEPATH=${BASEPATH%/*}
-		if [ "${BASEPATH:1:4}" = data ]; then
-			if pmex uninstall -k --user 0 "$PKG_NAME" >&2; then
-				rm -rf "$BASEPATH" 2>&1
-				ui_print "* Cleared existing $PKG_NAME package"
-				ui_print "* Reboot and reflash"
-				abort
-			else abort "ERROR: pm uninstall failed"; fi
-		else ui_print "* Installed stock $PKG_NAME package"; fi
+		pmex uninstall-system-updates "$PKG_NAME"
 	fi
 fi
 
@@ -99,12 +89,23 @@ install() {
 			break
 		fi
 		if ! op=$(pmex install-commit "$SES"); then
-			if echo "$op" | grep -q INSTALL_FAILED_VERSION_DOWNGRADE; then
-				ui_print "* Handling INSTALL_FAILED_VERSION_DOWNGRADE.."
+			echo >&2 "$op"
+			if echo "$op" | grep -q -e INSTALL_FAILED_VERSION_DOWNGRADE -e INSTALL_FAILED_UPDATE_INCOMPATIBLE; then
+				ui_print "* Handling install error"
+				pmex uninstall-system-updates "$PKG_NAME"
+				BASEPATH=$(pmex path "$PKG_NAME") || abort
+				BASEPATH=${BASEPATH##*:} BASEPATH=${BASEPATH%/*}
+				if [ "${BASEPATH:1:4}" != data ]; then IS_SYS=true; fi
 				if [ "$IS_SYS" = true ]; then
-					mkdir -p /data/adb/rvhc/empty /data/adb/post-fs-data.d
 					SCNM="/data/adb/post-fs-data.d/$PKG_NAME-uninstall.sh"
-					echo "mount /data/adb/rvhc/empty $BASEPATH" >"$SCNM"
+					if [ -f "$SCNM" ]; then
+						ui_print "* Remove the old module. Reboot and reflash!"
+						ui_print ""
+						install_err=" "
+						break
+					fi
+					mkdir -p /data/adb/rvhc/empty /data/adb/post-fs-data.d
+					echo "mount -o bind /data/adb/rvhc/empty $BASEPATH" >"$SCNM"
 					chmod +x "$SCNM"
 					ui_print "* Created the uninstall script."
 					ui_print ""
@@ -170,13 +171,7 @@ if ! op=$(mz mount "$RVPATH" "$BASEPATH/base.apk" 2>&1); then
 fi
 am force-stop "$PKG_NAME"
 
-ui_print "* Cleanup"
 rm -rf "${MODPATH:?}/bin" "$MODPATH/$PKG_NAME.apk"
-
-if [ "$KSU" ] && [ -d "/data/adb/modules/zygisk-assistant" ]; then
-	ui_print "* If you are using zygisk-assistant, you need to"
-	ui_print "  give root permissions to $PKG_NAME"
-fi
 
 ui_print "* Done"
 ui_print "  by j-hc (github.com/j-hc)"
