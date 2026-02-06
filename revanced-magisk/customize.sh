@@ -170,6 +170,10 @@ if ! op=$(mz mount "$RVPATH" "$BASEPATH/base.apk" 2>&1); then
 	ui_print "$op"
 fi
 am force-stop "$PKG_NAME"
+ui_print "* Optimizing $PKG_NAME"
+
+cmd package compile -m speed-profile -f "$PKG_NAME"
+# nohup cmd package compile -m speed-profile -f "$PKG_NAME" >/dev/null 2>&1
 
 rm -rf "${MODPATH:?}/bin" "$MODPATH/$PKG_NAME.apk"
 
