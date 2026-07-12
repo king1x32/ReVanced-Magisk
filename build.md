@@ -2,14 +2,16 @@ Disney-plus-Morphe (arm64-v8a): 2025.05.27-release
 Disney-plus-Morphe (arm-v7a): 2025.05.27-release  
 Duolingo-Morphe (arm64-v8a): 2026.04.27-release  
 Duolingo-Morphe (arm-v7a): 2026.04.27-release  
-Facebook-Morphe: 490.0.0.63.82  
+Facebook-Morphe (arm64-v8a): 490.0.0.63.82  
+Facebook-Morphe (arm-v7a): 490.0.0.63.82  
 GooglePhotos-Morphe (arm64-v8a): 7.68.0.884121604  
 GooglePhotos-Morphe (arm-v7a): 7.68.0.884121604  
 Ibs_paint-Morphe (arm64-v8a): 14.0.4  
 Ibs_paint-Morphe (arm-v7a): 14.0.4  
 Macrofactor-Morphe (arm64-v8a): 5.7.8  
 Macrofactor-Morphe (arm-v7a): 5.7.8  
-Messenger-Morphe: 569.0.0.44.91  
+Messenger-Morphe (arm64-v8a): 569.0.0.44.91  
+Messenger-Morphe (arm-v7a): 569.0.0.44.91  
 Music-Morphe (arm64-v8a): 9.15.51  
 Music-Morphe (arm-v7a): 9.15.51  
 Pandora-Morphe (arm64-v8a): 2606.3  
@@ -24,17 +26,20 @@ Proton-mail-Morphe (arm64-v8a): 4.15.0
 Proton-mail-Morphe (arm-v7a): 4.15.0  
 Proton-vpn-Morphe (arm64-v8a): 5.17.72.0  
 Proton-vpn-Morphe (arm-v7a): 5.17.72.0  
-Reddit-Morphe: 2026.14.0  
+Reddit-Morphe (arm64-v8a): 2026.14.0  
+Reddit-Morphe (arm-v7a): 2026.14.0  
 Smart_launcher-Morphe (arm64-v8a): 6.6 build 002  
 Smart_launcher-Morphe (arm-v7a): 6.6 build 002  
 Soundcloud-Morphe (arm64-v8a): 2026.04.27-release  
 Soundcloud-Morphe (arm-v7a): 2026.04.27-release  
 TikTok-Morphe (arm64-v8a): 43.8.3  
 TikTok-Morphe (arm-v7a): 43.8.3  
-Twitter-Morphe: 11.81.0-release.0  
+Twitter-Morphe (arm64-v8a): 11.81.0-release.0  
+Twitter-Morphe (arm-v7a): 11.81.0-release.0  
 Windscribe-Morphe (arm64-v8a): 4.2.2328  
 Windscribe-Morphe (arm-v7a): 4.2.2328  
-YouTube-Morphe: 20.51.39  
+YouTube-Morphe (arm64-v8a): 20.51.39  
+YouTube-Morphe (arm-v7a): 20.51.39  
 
 Install [ReVanced Microg](https://github.com/ReVanced/GmsCore/releases) for non-root YouTube and YT Music APKs  
 Use [zygisk-detach](https://github.com/j-hc/zygisk-detach) to detach root ReVanced YouTube and YT Music from Play Store  
