@@ -5,7 +5,7 @@ CWD=$(pwd)
 TEMP_DIR="temp"
 BIN_DIR="bin"
 BUILD_DIR="build"
-DL_SRCS=("direct" "archive" "apkmirror" "uptodown")
+DL_SRCS=("direct" "archive" "uptodown" "apkmirror")
 
 if [ "${GITHUB_TOKEN-}" ]; then GH_HEADER="Authorization: token ${GITHUB_TOKEN}"; else GH_HEADER=; fi
 NEXT_VER_CODE=${NEXT_VER_CODE:-$(date +'%Y%m%d')}
@@ -216,7 +216,7 @@ config_update() {
 }
 
 _req() {
-	local ip="$1" op="$2"
+	local ip="$1" op="$2" retry=3
 	shift 2
 	local dlp="$op"
 	if [ "$op" != - ]; then
@@ -227,15 +227,23 @@ _req() {
 			return
 		fi
 	fi
-	if ! curl -L -c "$TEMP_DIR/cookie.txt" -b "$TEMP_DIR/cookie.txt" --connect-timeout 10 --retry 1 --fail -s -S "$@" "$ip" -o "$dlp"; then
-		epr "Request failed: $ip"
-		return 1
-	fi
-	if [ "$dlp" != - ]; then
-		mv -f "$dlp" "$op"
-	fi
+	while [ $retry -gt 0 ]; do
+		if curl -L -c "$TEMP_DIR/cookie.txt" -b "$TEMP_DIR/cookie.txt" --connect-timeout 10 --retry 3 --fail -s -S "$@" "$ip" -o "$dlp"; then
+			if [ "$dlp" != - ]; then
+				mv -f "$dlp" "$op"
+			fi
+			return 0
+		fi
+		retry=$((retry - 1))
+		if [ $retry -gt 0 ]; then
+			wpr "Request failed, retrying in 5 seconds..."
+			sleep 5
+		fi
+	done
+	epr "Request failed: $ip"
+	return 1
 }
-req() { _req "$1" "$2" -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0"; }
+req() { _req "$1" "$2" -H "User-Agent: Mozilla/5.0"; }
 gh_req() { _req "$1" "$2" -H "$GH_HEADER"; }
 gh_dl() {
 	if [ ! -f "$1" ]; then
@@ -258,7 +266,7 @@ semver_validate() {
 	[ ${#ac} = 0 ]
 }
 get_patch_last_supported_ver() {
-	local list_patches=$1 pkg_name=$2 inc_sel=$3 _exc_sel=$4 _exclusive=$5 # TODO: resolve using all of these
+	local list_patches=$1 pkg_name=$2 inc_sel=$3 _exc_sel=$4 _exclusive=$5
 	local op
 	if [ "$inc_sel" ]; then
 		if ! op=$(awk '{$1=$1}1' <<<"$list_patches"); then
@@ -282,7 +290,8 @@ get_patch_last_supported_ver() {
 	if [ "$op" = "Any" ]; then return; fi
 	pcount=$(head -1 <<<"$op") pcount=${pcount#*(} pcount=${pcount% *}
 	if [ -z "$pcount" ]; then
-		abort "No patches found for '$pkg_name' in patches '$patches_jar'"
+		epr "No patches found for '$pkg_name' in patches '$patches_jar' - using latest version"
+		return 0
 	fi
 	grep -F "($pcount patch" <<<"$op" | sed 's/ (.* patch.*//' | get_highest_ver || return 1
 }
